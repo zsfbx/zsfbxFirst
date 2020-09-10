@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.smbms.dao.role.RoleMapper">
+    <insert id="add">
+        insert into smbms_role (roleCode,roleName,createdBy,creationDate,modifyBy,modifyDate)
+         values (#{roleCode},#{roleName},#{createdBy},#{creationDate},#{modifyBy},#{modifyDate});
+    </insert>
+    <update id="modify">
+        update smbms_role set
+        roleCode=#{roleCode},roleName=#{roleName},
+        modifyBy=#{modifyBy},modifyDate=#{modifyDate}
+        where id = #{id}
+    </update>
+    <delete id="deleteRoleById">
+        delete from smbms_role where id=#{delId}
+    </delete>
+    <select id="getRoleList" resultType="Role">
+    select * from smbms_role where 1=1
+    <if test="roleName != null and roleName != ''">
+        and roleName like concat('%',#{roleName},'%')
+    </if>
+    <if test="roleCode != null and roleCode != ''">
+        and roleCode like concat('%',#{roleCode},'%')
+    </if>
+</select>
+    <select id="getRoleById" resultType="cn.smbms.pojo.Role">
+        select * from smbms_role where id=#{id}
+    </select>
+
+</mapper>
